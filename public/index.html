@@ -1,0 +1,2680 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+
+  <title>BhashaTutor | Speak Better English</title>
+
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --primary-light: #ccfbf1;
+      --background: #f3f8f7;
+      --surface: #ffffff;
+      --text: #173b38;
+      --muted: #718582;
+      --border: #e1ece9;
+      --success: #15803d;
+      --danger: #dc2626;
+      --shadow: 0 12px 35px rgba(15, 118, 110, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    button, select, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #5eead4;
+      outline-offset: 3px;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .topbar {
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 15px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.7px;
+    }
+
+    .brand-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: white;
+      background: var(--primary);
+      font-size: 23px;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .hero {
+      background: linear-gradient(125deg, #0f766e, #134e4a);
+      color: white;
+      padding: 55px 24px 68px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border: 45px solid rgba(255,255,255,0.06);
+      border-radius: 50%;
+      right: -75px;
+      top: -110px;
+    }
+
+    .hero-inner {
+      max-width: 1132px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: rgba(255,255,255,0.10);
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      margin-bottom: 17px;
+    }
+
+    .hero h1 {
+      max-width: 650px;
+      font-size: clamp(32px, 5vw, 51px);
+      line-height: 1.15;
+      letter-spacing: -1.8px;
+      margin-bottom: 17px;
+    }
+
+    .hero h1 span {
+      color: #99f6e4;
+    }
+
+    .hero p {
+      max-width: 600px;
+      color: #d8f4ef;
+      font-size: 16px;
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .hero-points span {
+      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    main {
+      max-width: 1180px;
+      margin: -28px auto 0;
+      padding: 0 24px 45px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .progress-card {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      background: white;
+      padding: 20px;
+      border-radius: 17px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #8a9a97;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: #f0f5f4;
+    }
+
+    .progress-step.active {
+      color: var(--primary);
+    }
+
+    .progress-step.active .step-number,
+    .progress-step.done .step-number {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 23px;
+      align-items: start;
+    }
+
+    .column {
+      display: grid;
+      gap: 23px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .card-heading {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .heading-icon {
+      width: 45px;
+      height: 45px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      background: #e7f7f3;
+      border-radius: 14px;
+      font-size: 22px;
+    }
+
+    .card h2 {
+      font-size: 19px;
+      letter-spacing: -0.4px;
+    }
+
+    .card-heading p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 12px 0 21px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 750;
+      margin-bottom: 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 13px;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      margin-bottom: 19px;
+    }
+
+    .record-box {
+      background: #f4fbf9;
+      border: 1px solid #dcefeb;
+      border-radius: 15px;
+      padding: 22px 15px;
+      text-align: center;
+    }
+
+    .mic-orb {
+      width: 88px;
+      height: 88px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      background: #d9f5ee;
+      color: var(--primary);
+      font-size: 35px;
+      transition: 0.2s ease;
+    }
+
+    .mic-orb.recording {
+      background: #fee2e2;
+      color: #dc2626;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(220,38,38,0.18);
+      }
+      50% {
+        box-shadow: 0 0 0 13px rgba(220,38,38,0);
+      }
+    }
+
+    .record-box h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .record-box p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .timer {
+      font-size: 23px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 12px 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 17px;
+      font-size: 13px;
+      font-weight: 750;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .btn:not(:disabled):hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:not(:disabled):hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-light {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .status-message {
+      min-height: 24px;
+      margin-top: 13px;
+      font-size: 12px;
+      text-align: center;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .status-message.error {
+      color: var(--danger);
+    }
+
+    .status-message.success {
+      color: var(--success);
+    }
+
+    .divider-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #9aaba7;
+      font-size: 11px;
+      margin: 18px 0;
+    }
+
+    .divider-label::before,
+    .divider-label::after {
+      content: "";
+      height: 1px;
+      background: var(--border);
+      flex: 1;
+    }
+
+    .upload-box {
+      display: block;
+      border: 1px dashed #b6d6ce;
+      background: #fbfefd;
+      padding: 17px;
+      text-align: center;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .upload-box small {
+      display: block;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .upload-box input {
+      width: 100%;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .transcript-box {
+      min-height: 150px;
+      padding: 17px;
+      background: #f8fbfa;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .placeholder {
+      color: #9aa9a6;
+      font-style: italic;
+    }
+
+    .transcript-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 13px;
+    }
+
+    .transcript-actions .btn {
+      flex: 1;
+    }
+
+    .tip {
+      margin-top: 15px;
+      background: #fffbeb;
+      border: 1px solid #f4e9c6;
+      border-radius: 10px;
+      padding: 12px;
+      color: #87631b;
+      font-size: 12px;
+    }
+
+    .correction-empty {
+      background: #f8fbfa;
+      border: 1px dashed #d5e6e1;
+      border-radius: 13px;
+      padding: 22px 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .correction-empty .empty-icon {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .correction-result {
+      display: grid;
+      gap: 15px;
+    }
+
+    .result-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .sentence-box {
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .original-box {
+      background: #fff8ee;
+      border: 1px solid #f5e4c9;
+    }
+
+    .corrected-box {
+      background: #edfaf5;
+      border: 1px solid #d0eee1;
+      color: #145b49;
+      font-weight: 650;
+    }
+
+    .explanation {
+      border-left: 3px solid #8bd7c3;
+      padding: 4px 0 4px 12px;
+      font-size: 13px;
+      color: #526b66;
+      margin-bottom: 9px;
+    }
+
+    .practice-note {
+      background: #eff6ff;
+      border: 1px solid #dce9fa;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .practice-note p {
+      margin-top: 5px;
+      color: #526782;
+    }
+
+    .practice-controls {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .practice-controls input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .practice-feedback {
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 800px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-card {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        padding: 12px 16px;
+      }
+
+      .nav-status {
+        font-size: 11px;
+      }
+
+      .hero {
+        padding: 37px 18px 52px;
+      }
+
+      main {
+        padding: 0 14px 30px;
+      }
+
+      .progress-card {
+        padding: 15px;
+        gap: 16px 8px;
+      }
+
+      .progress-step {
+        font-size: 11px;
+        gap: 7px;
+      }
+
+      .step-number {
+        width: 30px;
+        height: 30px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <nav class="nav">
+      <div class="brand">
+        <div class="brand-icon">भ</div>
+        <div>
+          BhashaTutor
+          <small>Speak. Learn. Improve.</small>
+        </div>
+      </div>
+
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        Voice learning studio
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">YOUR PERSONAL ENGLISH PRACTICE SPACE</div>
+      <h1>Think in your language.<br>Speak <span>confidently.</span></h1>
+      <p>
+        Practise speaking, discover common English mistakes,
+        understand your corrections, and build confidence
+        one sentence at a time.
+      </p>
+
+      <div class="hero-points">
+        <span>🎙️ Voice-first learning</span>
+        <span>🧠 Mistake-to-Mastery</span>
+        <span>🗣️ Speak-back practice</span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <section class="progress-card" aria-label="Learning steps">
+      <div class="progress-step active" id="step1">
+        <span class="step-number">01</span>
+        <span>Record</span>
+      </div>
+
+      <div class="progress-step" id="step2">
+        <span class="step-number">02</span>
+        <span>Transcribe</span>
+      </div>
+
+      <div class="progress-step" id="step3">
+        <span class="step-number">03</span>
+        <span>Correct</span>
+      </div>
+
+      <div class="progress-step" id="step4">
+        <span class="step-number">04</span>
+        <span>Practise</span>
+      </div>
+    </section>
+
+    <div class="workspace">
+
+      <div class="column">
+
+        <section class="card" id="recordCard">
+          <div class="card-heading">
+            <div class="heading-icon">🎙️</div>
+            <div>
+              <h2>Practise with your voice</h2>
+              <p>Start with a sentence about your day.</p>
+            </div>
+          </div>
+
+          <p class="description">
+            Choose a language, record up to 60 seconds,
+            and let BhashaTutor turn your speech into text.
+          </p>
+
+          <label class="field-label" for="language">
+            I want to speak in
+          </label>
+
+          <select id="language">
+            <option value="en-IN">English (India)</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="mr-IN">Marathi</option>
+          </select>
+
+          <div class="record-box">
+            <div class="mic-orb" id="micOrb">🎙️</div>
+            <h3 id="recordTitle">Ready when you are!</h3>
+            <p id="recordHint">Press start and speak naturally.</p>
+
+            <div class="timer" id="timer">00:00 / 01:00</div>
+
+            <div class="button-row">
+              <button class="btn btn-primary" id="recordBtn" type="button">
+                ● Start Recording
+              </button>
+
+              <button class="btn btn-danger" id="stopBtn" type="button" disabled>
+                ■ Stop Recording
+              </button>
+            </div>
+
+            <div class="status-message" id="recordStatus" aria-live="polite">
+              Your microphone is ready to use.
+            </div>
+          </div>
+
+          <div class="divider-label">OR USE AN EXISTING RECORDING</div>
+
+          <label class="upload-box" for="audioFile">
+            📁 Choose an audio file
+            <small>WAV, MP3, OGG, FLAC, AAC or M4A · Maximum 15 MB</small>
+
+            <input
+              type="file"
+              id="audioFile"
+              accept=".wav,.mp3,.ogg,.flac,.aac,.m4a,audio/*"
+            >
+          </label>
+
+          <button
+            class="btn btn-primary btn-full"
+            id="uploadBtn"
+            type="button"
+            style="margin-top: 12px;"
+          >
+            Transcribe Audio File
+          </button>
+        </section>
+
+        <section class="card" id="transcriptCard">
+          <div class="card-heading">
+            <div class="heading-icon">📝</div>
+            <div>
+              <h2>Your transcript</h2>
+              <p>See what you said in text.</p>
+            </div>
+          </div>
+
+          <div class="transcript-box" id="result" aria-live="polite"><span class="placeholder">Your transcript will appear here after recording and transcription.</span></div>
+
+          <div class="transcript-actions">
+            <button class="btn btn-light" id="copyBtn" type="button" disabled>
+              Copy Text
+            </button>
+
+            <button class="btn btn-light" id="analyseBtn" type="button" disabled>
+              🧠 Analyse My English
+            </button>
+          </div>
+
+          <div class="tip">
+            💡 Tip: Speak naturally and use a quiet place for clearer transcription.
+          </div>
+        </section>
+
+      </div>
+
+      <div class="column">
+
+        <section class="card" id="correctionCard">
+          <div class="card-heading">
+            <div class="heading-icon">🧠</div>
+            <div>
+              <h2>Improve your English</h2>
+              <p>Turn mistakes into learning opportunities.</p>
+            </div>
+          </div>
+
+          <p class="description">
+            Get a corrected version of your sentence and
+            explanations for the mistakes our current rules detect.
+          </p>
+
+          <div id="correctionResult" aria-live="polite">
+            <div class="correction-empty">
+              <div class="empty-icon">✨</div>
+              <strong>Your learning space is ready.</strong>
+              <p>Record a sentence, then select Analyse My English.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="practiceCard">
+          <div class="card-heading">
+            <div class="heading-icon">🗣️</div>
+            <div>
+              
+              <h2>Speak it correctly</h2>
+              <p>Listen, repeat, and practise again.</p>
+             
+            </div>
+          </div>
+
+          <div class="correction-empty" id="practiceEmpty">
+            Your corrected sentence will appear here after analysis.
+          </div>
+          
+<section class="ai-correction-panel">
+  <h3>✨ AI English Coach</h3>
+  <p>Get a natural correction and understand your mistake.</p>
+
+  <button id="aiCorrectBtn" onclick="runAICorrection()">
+    Improve with AI
+  </button>
+
+  <div id="aiCorrectionResult" aria-live="polite"></div>
+</section>
+
+
+          <div id="practiceContent" class="hidden">
+            <div class="practice-note">
+              <strong>🎧 Listen to the corrected sentence</strong>
+              <p>Listen carefully, then try saying the sentence yourself.</p>
+              <button
+                class="btn btn-primary"
+                id="speakBtn"
+                type="button"
+                style="margin-top: 12px;"
+              >
+                ▶ Speak Sentence
+              </button>
+            </div>
+
+            <div class="practice-controls">
+              <label class="field-label" for="practiceInput">
+                Type the corrected sentence from memory
+              </label>
+
+              <input
+                id="practiceInput"
+                type="text"
+                placeholder="Write the sentence here..."
+              >
+
+              <button class="btn btn-primary" id="checkPracticeBtn" type="button">
+                Check My Practice
+              </button>
+
+              <div id="practiceFeedback" class="practice-feedback" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    BhashaTutor · Learn at your pace. Speak with confidence.
+    <br>Transcription and correction results may not be perfect.
+  </footer>
+
+  <script>
+    const recordBtn = document.getElementById("recordBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const audioFile = document.getElementById("audioFile");
+    const languageSelect = document.getElementById("language");
+
+    const recordStatus = document.getElementById("recordStatus");
+    const recordTitle = document.getElementById("recordTitle");
+    const recordHint = document.getElementById("recordHint");
+    const micOrb = document.getElementById("micOrb");
+    const timer = document.getElementById("timer");
+    const result = document.getElementById("result");
+
+    const copyBtn = document.getElementById("copyBtn");
+    const analyseBtn = document.getElementById("analyseBtn");
+    const correctionResult = document.getElementById("correctionResult");
+
+    const practiceEmpty = document.getElementById("practiceEmpty");
+    const practiceContent = document.getElementById("practiceContent");
+    const practiceInput = document.getElementById("practiceInput");
+    const practiceFeedback = document.getElementById("practiceFeedback");
+
+    let mediaRecorder = null;
+    let recordingStream = null;
+    let audioChunks = [];
+    let recordingTimeout = null;
+    let timerInterval = null;
+    let startedAt = 0;
+    let currentTranscript = "";
+    let correctedTranscript = "";
+    let busy = false;
+
+    const MAX_RECORDING_SECONDS = 60;
+    const MAX_UPLOAD_BYTES = 15 * 1024 * 1024;
+
+    function setStatus(message, type = "") {
+      recordStatus.textContent = message;
+      recordStatus.className = "status-message " + type;
+    }
+
+    function setBusy(value) {
+      busy = value;
+      uploadBtn.disabled = value;
+      languageSelect.disabled = value || Boolean(
+        mediaRecorder && mediaRecorder.state === "recording"
+      );
+      audioFile.disabled = value;
+      analyseBtn.disabled = value || !currentTranscript;
+    }
+
+    function formatTime(seconds) {
+      const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const secs = String(seconds % 60).padStart(2, "0");
+      return mins + ":" + secs;
+    }
+
+    function updateTimer() {
+      const elapsed = Math.min(
+        MAX_RECORDING_SECONDS,
+        Math.floor((Date.now() - startedAt) / 1000)
+      );
+
+      timer.textContent = formatTime(elapsed) + " / 01:00";
+    }
+
+    function updateSteps(active) {
+      for (let i = 1; i <= 4; i++) {
+        const step = document.getElementById("step" + i);
+        step.classList.toggle("active", i === active);
+        step.classList.toggle("done", i < active);
+      }
+    }
+
+    function resetLearningResults() {
+      currentTranscript = "";
+      correctedTranscript = "";
+
+      copyBtn.disabled = true;
+      analyseBtn.disabled = true;
+
+      correctionResult.innerHTML =
+        '<div class="correction-empty">' +
+          '<div class="empty-icon">✨</div>' +
+          '<strong>Your learning space is ready.</strong>' +
+          '<p>Record a sentence, then select Analyse My English.</p>' +
+        '</div>';
+
+      practiceEmpty.classList.remove("hidden");
+      practiceContent.classList.add("hidden");
+      practiceFeedback.textContent = "";
+      practiceInput.value = "";
+    }
+
+    // Convert decoded audio to standard PCM WAV.
+    // This avoids sending a WebM recording directly to Gnani.
+    
+async function convertBlobToWav(blob) {
+  if (!blob || blob.size === 0) {
+    throw new Error("The recording is empty. Please record again.");
+  }
+
+  let audioContext;
+
+  try {
+    audioContext = new (window.AudioContext ||
+      window.webkitAudioContext)();
+
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
+    }
+
+    const arrayBuffer = await blob.arrayBuffer();
+
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+    const channels = audioBuffer.numberOfChannels;
+    const sampleRate = audioBuffer.sampleRate;
+    const frameCount = audioBuffer.length;
+
+    const wavBuffer = new ArrayBuffer(44 + frameCount * channels * 2);
+    const view = new DataView(wavBuffer);
+
+    function writeString(offset, value) {
+      for (let i = 0; i < value.length; i++) {
+        view.setUint8(offset + i, value.charCodeAt(i));
+      }
+    }
+
+    writeString(0, "RIFF");
+    view.setUint32(4, 36 + frameCount * channels * 2, true);
+    writeString(8, "WAVE");
+    writeString(12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, channels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * channels * 2, true);
+    view.setUint16(32, channels * 2, true);
+    view.setUint16(34, 16, true);
+    writeString(36, "data");
+    view.setUint32(40, frameCount * channels * 2, true);
+
+    const channelData = Array.from(
+      { length: channels },
+      (_, channel) => audioBuffer.getChannelData(channel)
+    );
+
+    let offset = 44;
+
+    for (let i = 0; i < frameCount; i++) {
+      for (let channel = 0; channel < channels; channel++) {
+        let sample = channelData[channel][i];
+        sample = Math.max(-1, Math.min(1, sample));
+
+        const pcm = sample < 0
+          ? sample * 32768
+          : sample * 32767;
+
+        view.setInt16(offset, pcm, true);
+        offset += 2;
+      }
+    }
+
+    return new Blob([wavBuffer], { type: "audio/wav" });
+
+  } catch (error) {
+    console.error("Audio conversion failed:", {
+      message: error.message,
+      originalType: blob.type,
+      originalSize: blob.size
+    });
+
+    throw new Error(
+      "The browser could not decode this recording. " +
+      "Please record again. If it continues, check the browser console."
+    );
+
+  } finally {
+    if (audioContext && audioContext.state !== "closed") {
+      await audioContext.close();
+    }
+  }
+}
+
+    function stopTracks() {
+      if (recordingStream) {
+        recordingStream.getTracks().forEach(track => track.stop());
+        recordingStream = null;
+      }
+    }
+
+    function finishRecordingUI() {
+      clearTimeout(recordingTimeout);
+      clearInterval(timerInterval);
+
+      recordBtn.disabled = busy;
+      stopBtn.disabled = true;
+      languageSelect.disabled = busy;
+
+      micOrb.classList.remove("recording");
+      recordTitle.textContent = "Recording finished";
+      recordHint.textContent = "Preparing your audio...";
+    }
+
+    async function transcribeAudio(blob, filename, languageCode) {
+      if (busy) return;
+
+      setBusy(true);
+      setStatus("Sending audio for transcription. Please wait...");
+
+      result.textContent = "Transcribing your speech...";
+      updateSteps(2);
+
+      const formData = new FormData();
+      formData.append("audio_file", blob, filename);
+      formData.append("language_code", languageCode);
+
+      try {
+        const response = await fetch("/api/transcribe", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !data.success) {
+          throw new Error(
+            data.error || data.message || "Transcription failed."
+          );
+        }
+
+        currentTranscript = (data.transcript || "").trim();
+
+        if (!currentTranscript) {
+          result.textContent = "No speech was detected. Please try again.";
+          setStatus("No speech detected. Try a clearer recording.", "error");
+          resetLearningResults();
+          updateSteps(1);
+          return;
+        }
+
+        result.textContent = currentTranscript;
+        copyBtn.disabled = false;
+        analyseBtn.disabled = false;
+
+        correctionResult.innerHTML =
+          '<div class="correction-empty">' +
+            '<div class="empty-icon">💡</div>' +
+            '<strong>Ready to improve?</strong>' +
+            '<p>Select Analyse My English to review your sentence.</p>' +
+          '</div>';
+
+        practiceEmpty.classList.remove("hidden");
+        practiceContent.classList.add("hidden");
+
+        setStatus("Your speech was transcribed successfully.", "success");
+        recordTitle.textContent = "Great job!";
+        recordHint.textContent = "Your transcript is ready.";
+        updateSteps(3);
+
+      } catch (error) {
+        result.textContent = "Error: " + error.message;
+        setStatus(error.message, "error");
+        updateSteps(1);
+      } finally {
+        setBusy(false);
+        recordBtn.disabled = false;
+        stopBtn.disabled = true;
+        languageSelect.disabled = false;
+      }
+    }
+
+    recordBtn.addEventListener("click", async () => {
+      if (busy) return;
+
+      if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+        setStatus(
+          "Recording is not supported in this browser. Try the latest Chrome.",
+          "error"
+        );
+        return;
+      }
+
+      try {
+        recordBtn.disabled = true;
+        setStatus("Requesting microphone permission...");
+
+        recordingStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
+        });
+
+        audioChunks = [];
+
+        const preferredTypes = [
+          "audio/webm;codecs=opus",
+          "audio/webm",
+          "audio/mp4"
+        ];
+
+        const supportedType = preferredTypes.find(type =>
+          MediaRecorder.isTypeSupported(type)
+        );
+
+        mediaRecorder = supportedType
+          ? new MediaRecorder(recordingStream, { mimeType: supportedType })
+          : new MediaRecorder(recordingStream);
+
+        mediaRecorder.addEventListener("dataavailable", event => {
+          if (event.data && event.data.size > 0) {
+            audioChunks.push(event.data);
+          }
+        });
+
+        mediaRecorder.addEventListener("stop", async () => {
+          finishRecordingUI();
+          stopTracks();
+
+          const recordedBlob = new Blob(audioChunks, {
+            type: mediaRecorder.mimeType || "audio/webm"
+          });
+
+          if (!recordedBlob.size) {
+            setStatus("No audio was recorded. Please try again.", "error");
+            result.textContent = "No audio recorded.";
+            setBusy(false);
+            recordBtn.disabled = false;
+            return;
+          }
+
+          try {
+            setStatus("Converting recording to WAV audio...");
+            const wavBlob = await convertBlobToWav(recordedBlob);
+
+            await transcribeAudio(
+              wavBlob,
+              "recording.wav",
+              languageSelect.value
+            );
+          } catch (error) {
+            setStatus(
+              "Could not process the recording: " + error.message,
+              "error"
+            );
+            result.textContent =
+              "Please try recording again using Chrome. " + error.message;
+            setBusy(false);
+            recordBtn.disabled = false;
+            updateSteps(1);
+          }
+        });
+
+        mediaRecorder.start();
+
+        startedAt = Date.now();
+        timer.textContent = "00:00 / 01:00";
+        micOrb.classList.add("recording");
+        recordTitle.textContent = "Listening to you...";
+        recordHint.textContent = "Speak clearly. You can stop at any time.";
+
+        setStatus("Recording in progress...");
+        stopBtn.disabled = false;
+        languageSelect.disabled = true;
+        updateSteps(1);
+
+        timerInterval = setInterval(updateTimer, 250);
+
+        recordingTimeout = setTimeout(() => {
+          if (mediaRecorder?.state === "recording") {
+            mediaRecorder.stop();
+            setStatus("60-second limit reached. Processing audio...");
+          }
+        }, MAX_RECORDING_SECONDS * 1000);
+
+      } catch (error) {
+        stopTracks();
+        recordBtn.disabled = false;
+        stopBtn.disabled = true;
+
+        setStatus(
+          error.name === "NotAllowedError"
+            ? "Microphone permission was denied. Allow access in your browser settings."
+            : "Could not start recording: " + error.message,
+          "error"
+        );
+      }
+    });
+
+    stopBtn.addEventListener("click", () => {
+      if (mediaRecorder?.state === "recording") {
+        clearTimeout(recordingTimeout);
+        mediaRecorder.stop();
+
+        stopBtn.disabled = true;
+        recordBtn.disabled = true;
+        setStatus("Recording stopped. Processing your voice...");
+      }
+    });
+
+    // Optional supported audio-file upload.
+    uploadBtn.addEventListener("click", async () => {
+      if (busy) return;
+
+      const file = audioFile.files[0];
+
+      if (!file) {
+        setStatus("Please choose an audio file first.", "error");
+        return;
+      }
+
+      if (file.size > MAX_UPLOAD_BYTES) {
+        setStatus("Your audio file must be 15 MB or smaller.", "error");
+        return;
+      }
+
+      const allowedExtensions = [
+        ".wav", ".mp3", ".ogg", ".flac", ".aac", ".m4a"
+      ];
+
+      const extension = "." + file.name.split(".").pop().toLowerCase();
+
+      if (!allowedExtensions.includes(extension)) {
+        setStatus("Please select WAV, MP3, OGG, FLAC, AAC or M4A.", "error");
+        return;
+      }
+
+      resetLearningResults();
+
+      recordTitle.textContent = "Processing your audio file";
+      await transcribeAudio(file, file.name, languageSelect.value);
+    });
+
+    // Common beginner-level grammar patterns.
+    // This is a limited demonstration, not a complete grammar checker.
+    const grammarRules = [
+      {
+        pattern: /\bI is\b/gi,
+        replacement: "I am",
+        explanation: 'Use "am" with "I", not "is".'
+      },
+      {
+        pattern: /\b(he|she|it) go\b/gi,
+        replacement: (_, subject) => subject + " goes",
+        explanation: 'Use "goes" with he, she, or it in the simple present.'
+      },
+      {
+        pattern: /\b(he|she|it) have\b/gi,
+        replacement: (_, subject) => subject + " has",
+        explanation: 'Use "has" with he, she, or it.'
+      },
+      {
+        pattern: /\b(he|she|it) are\b/gi,
+        replacement: (_, subject) => subject + " is",
+        explanation: 'Use "is" with he, she, or it.'
+      },
+      {
+        pattern: /\bthey is\b/gi,
+        replacement: "they are",
+        explanation: 'Use "are" with "they".'
+      },
+      {
+        pattern: /\bI has\b/gi,
+        replacement: "I have",
+        explanation: 'Use "have" with "I".'
+      },
+      {
+        pattern: /\b(we|you|they) was\b/gi,
+        replacement: (_, subject) => subject + " were",
+        explanation: 'Use "were" with we, you, and they.'
+      },
+      {
+        pattern: /\b(he|she|it) were\b/gi,
+        replacement: (_, subject) => subject + " was",
+        explanation: 'Use "was" with he, she, and it.'
+      },
+      {
+        pattern: /\bdidn't went\b/gi,
+        replacement: "didn't go",
+        explanation: 'After "didn’t", use the base verb: "go".'
+      },
+      {
+        pattern: /\bdidn't ate\b/gi,
+        replacement: "didn't eat",
+        explanation: 'After "didn’t", use the base verb: "eat".'
+      },
+      {
+        pattern: /\bI am agree\b/gi,
+        replacement: "I agree",
+        explanation: 'Say "I agree", not "I am agree".'
+      },
+      {
+        pattern: /\bdiscuss about\b/gi,
+        replacement: "discuss",
+        explanation: 'Usually, use "discuss something" without "about".'
+      }
+    ];
+
+    analyseBtn.addEventListener("click", () => {
+      if (!currentTranscript.trim()) {
+        setStatus("Record your voice before analysing.", "error");
+        return;
+      }
+
+      let corrected = currentTranscript;
+      const explanations = [];
+
+      for (const rule of grammarRules) {
+        rule.pattern.lastIndex = 0;
+
+        if (rule.pattern.test(corrected)) {
+          rule.pattern.lastIndex = 0;
+          corrected = corrected.replace(rule.pattern, rule.replacement);
+
+          explanations.push(rule.explanation);
+        }
+
+        rule.pattern.lastIndex = 0;
+      }
+
+      correctedTranscript = corrected;
+
+      const hasChanges = corrected !== currentTranscript;
+
+      correctionResult.replaceChildren();
+
+      const originalLabel = document.createElement("span");
+      originalLabel.className = "result-label";
+      originalLabel.textContent = "YOUR ORIGINAL SENTENCE";
+
+      const originalBox = document.createElement("div");
+      originalBox.className = "sentence-box original-box";
+      originalBox.textContent = currentTranscript;
+
+      const correctedLabel = document.createElement("span");
+      correctedLabel.className = "result-label";
+      correctedLabel.textContent = "SUGGESTED CORRECTION";
+
+      const correctedBox = document.createElement("div");
+      correctedBox.className = "sentence-box corrected-box";
+      correctedBox.textContent = corrected;
+
+      correctionResult.append(
+        originalLabel,
+        originalBox,
+        correctedLabel,
+        correctedBox
+      );
+
+      if (hasChanges) {
+        const whyLabel = document.createElement("span");
+        whyLabel.className = "result-label";
+        whyLabel.textContent = "WHAT TO LEARN";
+
+        correctionResult.appendChild(whyLabel);
+
+        [...new Set(explanations)].forEach(explanation => {
+          const item = document.createElement("div");
+          item.className = "explanation";
+          item.textContent = explanation;
+          correctionResult.appendChild(item);
+        });
+      } else {
+        const note = document.createElement("p");
+        note.className = "explanation";
+        note.textContent =
+          "Our current basic rules did not detect a listed mistake. " +
+          "This does not guarantee that the sentence is grammatically perfect.";
+        correctionResult.appendChild(note);
+      }
+
+      practiceEmpty.classList.add("hidden");
+      practiceContent.classList.remove("hidden");
+      practiceInput.value = "";
+      practiceFeedback.textContent = "";
+
+      updateSteps(4);
+      document.getElementById("practiceCard").scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      if (!currentTranscript) return;
+
+      try {
+        await navigator.clipboard.writeText(currentTranscript);
+        setStatus("Transcript copied to clipboard.", "success");
+      } catch {
+        setStatus("Clipboard access failed. Select and copy the transcript manually.", "error");
+      }
+    });
+
+    // Speak the suggested sentence using the browser's speech synthesis.
+    document.getElementById("speakBtn").addEventListener("click", () => {
+      if (!correctedTranscript || !("speechSynthesis" in window)) {
+        practiceFeedback.textContent =
+          "Speech playback is not available in this browser.";
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(correctedTranscript);
+      utterance.lang = "en-IN";
+      utterance.rate = 0.88;
+
+      window.speechSynthesis.speak(utterance);
+    });
+
+    document.getElementById("checkPracticeBtn").addEventListener("click", () => {
+      const answer = practiceInput.value.trim();
+
+      if (!answer) {
+        practiceFeedback.textContent = "Type the sentence before checking.";
+        return;
+      }
+
+      const normalize = text =>
+        text.toLowerCase()
+          .replace(/[.,!?;:'"]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+
+      if (normalize(answer) === normalize(correctedTranscript)) {
+        practiceFeedback.textContent =
+          "✅ Excellent! You reproduced the corrected sentence.";
+        practiceFeedback.style.color = "#15803d";
+      } else {
+        practiceFeedback.textContent =
+          "Keep practising! Suggested sentence: " + correctedTranscript;
+        practiceFeedback.style.color = "#b45309";
+      }
+    });
+
+    // Clean up the microphone if the user leaves the page.
+    window.addEventListener("beforeunload", () => {
+      clearTimeout(recordingTimeout);
+      clearInterval(timerInterval);
+      stopTracks();
+
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    });
+async function runAICorrection() {
+  const button = document.getElementById("aiCorrectBtn");
+  const output = document.getElementById("aiCorrectionResult");
+
+  // Use the transcript already captured by BhashaTutor.
+  const sentence = typeof currentTranscript === "string"
+    ? currentTranscript.trim()
+    : "";
+
+  if (!sentence) {
+    output.textContent =
+      "Please record or transcribe a sentence first.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "✨ Correcting...";
+  output.replaceChildren();
+
+  try {
+    const response = await fetch("/api/correct", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ sentence })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "AI correction failed.");
+    }
+
+    const heading = document.createElement("h4");
+    heading.textContent = "Corrected sentence";
+
+    const corrected = document.createElement("p");
+    corrected.textContent = data.correctedSentence;
+
+    const explanationHeading = document.createElement("h4");
+    explanationHeading.textContent = "Why?";
+
+    const explanation = document.createElement("p");
+    explanation.textContent = data.explanation;
+
+    const practiceHeading = document.createElement("h4");
+    practiceHeading.textContent = "Try this too";
+
+    const practice = document.createElement("p");
+    practice.textContent = data.practiceExample;
+
+    const speakButton = document.createElement("button");
+    speakButton.textContent = "🔊 Listen to correction";
+
+    speakButton.addEventListener("click", () => {
+      if (!("speechSynthesis" in window)) {
+        output.append("Speech is not supported in this browser.");
+        return;
+      }
+
+      speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(
+        data.correctedSentence
+      );
+
+      utterance.lang = "en-IN";
+      utterance.rate = 0.85;
+      speechSynthesis.speak(utterance);
+    });
+
+    output.append(
+      heading,
+      corrected,
+      explanationHeading,
+      explanation,
+      practiceHeading,
+      practice,
+      speakButton
+    );
+
+  } catch (error) {
+    output.textContent = error.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = "Improve with AI";
+  }
+}
+
+  </script>
+
+<!-- BhashaTutor: Daily English Conversation Practice -->
+<section id="dailyConversation" class="daily-conversation">
+  <div class="conversation-heading">
+    <p class="conversation-eyebrow">BHASHATUTOR SPEAKING LAB</p>
+    <h2>Daily English Conversations</h2>
+    <p>Practise everyday English with your friendly AI partner.</p>
+  </div>
+
+  <div class="conversation-controls">
+    <label for="conversationTopic">Choose your situation</label>
+    <select id="conversationTopic">
+      <option>Meeting a new friend</option>
+      <option>At a restaurant</option>
+      <option>Shopping</option>
+      <option>College life</option>
+      <option>Daily routine</option>
+    </select>
+    <button id="startConversation" type="button">
+      Start conversation
+    </button>
+    <button id="endConversation" type="button" disabled>
+      End conversation
+    </button>
+  </div>
+
+  <div
+    id="conversationMessages"
+    class="conversation-messages"
+    aria-live="polite"
+    aria-label="Conversation messages"
+  >
+    <div class="conversation-welcome">
+      <div class="conversation-avatar">🤖</div>
+      <div>
+        <strong>Your AI English Partner</strong>
+        <p>Choose a situation and start practising!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conversation-input-area">
+    <textarea
+      id="conversationInput"
+      rows="2"
+      maxlength="1000"
+      placeholder="Type your reply in English..."
+      aria-label="Your message"
+      disabled
+    ></textarea>
+
+    <div class="conversation-actions">
+      <button id="conversationMic" type="button" disabled>
+        🎙️ Speak
+      </button>
+      <button id="sendConversation" type="button" disabled>
+        Send message ➜
+      </button>
+    </div>
+
+    <p id="conversationStatus" role="status">
+      Start a conversation to begin.
+    </p>
+  </div>
+</section>
+
+<style>
+  .daily-conversation {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 26px;
+    border: 1px solid #dbe8e5;
+    border-radius: 22px;
+    background: #ffffff;
+    color: #173b37;
+    box-shadow: 0 12px 35px rgba(15, 118, 110, 0.08);
+    font-family: Arial, sans-serif;
+  }
+
+  .conversation-heading {
+    margin-bottom: 24px;
+  }
+
+  .conversation-eyebrow {
+    color: #0f766e;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .conversation-heading h2 {
+    margin: 8px 0;
+    font-size: clamp(23px, 4vw, 32px);
+  }
+
+  .conversation-heading p,
+  .conversation-welcome p {
+    color: #657b77;
+    line-height: 1.6;
+  }
+
+  .conversation-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .conversation-controls label {
+    grid-column: 1 / -1;
+    font-weight: 600;
+  }
+
+  .conversation-controls select,
+  .conversation-input-area textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d4e3df;
+    border-radius: 10px;
+    background: #fff;
+    color: #173b37;
+    font: inherit;
+  }
+
+  .conversation-controls select {
+    grid-column: 1 / -1;
+  }
+
+  .daily-conversation button {
+    padding: 12px 15px;
+    border: 0;
+    border-radius: 10px;
+    background: #0f766e;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .daily-conversation button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .daily-conversation button:focus-visible,
+  .daily-conversation select:focus-visible,
+  .daily-conversation textarea:focus-visible {
+    outline: 3px solid #78c8bd;
+    outline-offset: 2px;
+  }
+
+  .conversation-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 180px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 18px;
+    border-radius: 15px;
+    background: #f3f8f7;
+  }
+
+  .conversation-welcome {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .conversation-avatar {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #d9f2ec;
+    font-size: 22px;
+  }
+
+  .conversation-bubble {
+    max-width: 85%;
+    padding: 13px 15px;
+    border-radius: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .conversation-bubble.user {
+    align-self: flex-end;
+    background: #0f766e;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+
+  .conversation-bubble.ai {
+    align-self: flex-start;
+    background: white;
+    border: 1px solid #dceae6;
+    border-bottom-left-radius: 4px;
+  }
+
+  .conversation-bubble .speaker-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.8;
+  }
+
+  .conversation-feedback {
+    margin-top: 9px;
+    padding: 11px;
+    border-radius: 9px;
+    background: #e8f7ef;
+    color: #215640;
+    font-size: 14px;
+  }
+
+  .conversation-feedback p {
+    margin: 5px 0;
+  }
+
+  .conversation-feedback button {
+    margin-top: 5px;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .conversation-input-area {
+    margin-top: 18px;
+  }
+
+  .conversation-input-area textarea {
+    resize: vertical;
+    min-height: 65px;
+  }
+
+  .conversation-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  #conversationMic {
+    background: #e0f2ef;
+    color: #0f655d;
+  }
+
+  #conversationStatus {
+    color: #657b77;
+    font-size: 13px;
+  }
+
+  @media (max-width: 520px) {
+    .daily-conversation {
+      margin: 20px 10px;
+      padding: 16px;
+    }
+
+    .conversation-controls {
+      grid-template-columns: 1fr;
+    }
+
+    .conversation-controls select {
+      grid-column: auto;
+    }
+
+    .conversation-bubble {
+      max-width: 95%;
+    }
+  }
+</style>
+
+<script>
+(() => {
+  const topicSelect = document.getElementById("conversationTopic");
+  const startButton = document.getElementById("startConversation");
+  const endButton = document.getElementById("endConversation");
+  const sendButton = document.getElementById("sendConversation");
+  const micButton = document.getElementById("conversationMic");
+  const input = document.getElementById("conversationInput");
+  const messagesBox = document.getElementById("conversationMessages");
+  const status = document.getElementById("conversationStatus");
+
+  if (!topicSelect || !startButton || !messagesBox) return;
+
+  let history = [];
+  let active = false;
+  let busy = false;
+  let recognition = null;
+  let sessionId = 0;
+
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  function setStatus(message) {
+    status.textContent = message;
+  }
+
+  function addMessage(role, text, correction = "", explanation = "") {
+    const bubble = document.createElement("div");
+    bubble.className =
+      "conversation-bubble " + (role === "user" ? "user" : "ai");
+
+    const label = document.createElement("span");
+    label.className = "speaker-label";
+    label.textContent = role === "user" ? "You" : "AI English Partner";
+
+    const messageText = document.createElement("div");
+    messageText.textContent = text;
+
+    bubble.append(label, messageText);
+
+    if (role === "model") {
+      const speakButton = document.createElement("button");
+      speakButton.type = "button";
+      speakButton.textContent = "🔊 Listen";
+      speakButton.style.marginTop = "8px";
+
+      speakButton.addEventListener("click", () => {
+        if (!("speechSynthesis" in window)) {
+          setStatus("Speech playback is not supported in this browser.");
+          return;
+        }
+
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "en-IN";
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      });
+
+      bubble.appendChild(speakButton);
+
+      if (correction) {
+        const feedback = document.createElement("div");
+        feedback.className = "conversation-feedback";
+
+        const title = document.createElement("strong");
+        title.textContent = "A small improvement";
+
+        const corrected = document.createElement("p");
+        corrected.textContent = correction;
+
+        feedback.append(title, corrected);
+
+        if (explanation) {
+          const explanationText = document.createElement("p");
+          explanationText.textContent = explanation;
+          feedback.appendChild(explanationText);
+        }
+
+        bubble.appendChild(feedback);
+      }
+    }
+
+    messagesBox.appendChild(bubble);
+    messagesBox.scrollTop = messagesBox.scrollHeight;
+  }
+
+  function updateControls() {
+    input.disabled = !active || busy;
+    sendButton.disabled = !active || busy;
+    micButton.disabled = !active || busy || !SpeechRecognition;
+    startButton.disabled = active;
+    topicSelect.disabled = active;
+    endButton.disabled = !active;
+  }
+
+  function stopRecognition() {
+    if (recognition) {
+      try {
+        recognition.stop();
+      } catch (_) {}
+
+      recognition = null;
+    }
+  }
+
+function endSession(message = "Conversation ended. Start again to practise more.") {
+  const wasActive = active;
+
+  // Send a copy of the conversation to the dashboard.
+  // The dashboard will request the AI report from the backend.
+  if (wasActive && history.some((item) => item.role === "user")) {
+    window.dispatchEvent(
+      new CustomEvent("bhashatutor:session-ended", {
+        detail: {
+          topic: topicSelect.value,
+          history: history.map((item) => ({
+            role: item.role,
+            text: item.text
+          }))
+        }
+      })
+    );
+  }
+
+  active = false;
+  busy = false;
+  sessionId++;
+
+  stopRecognition();
+
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+
+  updateControls();
+  setStatus(message);
+}
+
+
+  async function sendMessage() {
+    const sentence = input.value.trim();
+
+    if (!sentence || !active || busy) return;
+
+    if (sentence.length > 1000) {
+      setStatus("Please keep your message under 1,000 characters.");
+      return;
+    }
+
+    const thisSession = sessionId;
+
+    history.push({ role: "user", text: sentence });
+    addMessage("user", sentence);
+    input.value = "";
+
+    busy = true;
+    updateControls();
+    setStatus("Your AI partner is thinking...");
+
+    try {
+      const response = await fetch("/api/conversation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          topic: topicSelect.value,
+          history: history.slice(-12)
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (thisSession !== sessionId || !active) return;
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Could not get an AI response.");
+      }
+
+      history.push({ role: "model", text: data.reply });
+
+      addMessage(
+        "model",
+        data.reply,
+        data.correctedSentence,
+        data.explanation
+      );
+
+      setStatus("Your turn! Reply in English or use the microphone.");
+    } catch (error) {
+      if (thisSession !== sessionId || !active) return;
+
+      // Remove the unanswered user message from AI history.
+      history.pop();
+
+      // Keep the visible message, but allow the learner to retry.
+      input.value = sentence;
+      setStatus(error.message || "Something went wrong. Please try again.");
+    } finally {
+      if (thisSession === sessionId && active) {
+        busy = false;
+        updateControls();
+      }
+    }
+  }
+
+  startButton.addEventListener("click", () => {
+    sessionId++;
+    history = [];
+    active = true;
+    busy = false;
+
+    messagesBox.replaceChildren();
+
+    addMessage(
+      "model",
+      ({
+        "Meeting a new friend": "Hi! Nice to meet you. What's your name?",
+        "At a restaurant": "Hello! Welcome. What would you like to order today?",
+        "Shopping": "Hi there! Welcome to our shop. What are you looking for?",
+        "College life": "Hey! How is college going? What are you studying?",
+        "Daily routine": "Hi! Let's talk about everyday life. How was your day?"
+      })[topicSelect.value]
+    );
+
+    // The first greeting is the model's opening message.
+    history.push({
+      role: "model",
+      text: messagesBox.lastElementChild
+        .querySelector("div:nth-child(2)")?.textContent || ""
+    });
+
+    updateControls();
+    input.focus();
+    setStatus("Conversation started. Type or speak your reply.");
+  });
+
+  endButton.addEventListener("click", () => endSession());
+
+  sendButton.addEventListener("click", sendMessage);
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+
+  micButton.addEventListener("click", () => {
+    if (!SpeechRecognition) {
+      setStatus("Voice input is unavailable. Please type your reply.");
+      return;
+    }
+
+    stopRecognition();
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.continuous = false;
+
+    recognition.onstart = () => {
+      setStatus("Listening... Speak clearly in English.");
+      micButton.textContent = "🎙️ Listening...";
+    };
+
+    recognition.onresult = (event) => {
+      input.value = event.results[0][0].transcript;
+      setStatus("Speech captured. Review it, then press Send message.");
+    };
+
+    recognition.onerror = (event) => {
+      setStatus(
+        event.error === "not-allowed"
+          ? "Microphone access was denied. Allow microphone access or type instead."
+          : "Could not capture speech. Please try again or type instead."
+      );
+    };
+
+    recognition.onend = () => {
+      recognition = null;
+      micButton.textContent = "🎙️ Speak";
+      updateControls();
+    };
+
+    try {
+      recognition.start();
+      micButton.disabled = true;
+    } catch (_) {
+      setStatus("Could not start the microphone. Please try again.");
+    }
+  });
+
+  updateControls();
+})();
+</script>
+
+<section id="speakingDashboard" class="speaking-dashboard">
+  <div class="dashboard-heading">
+    <p class="dashboard-eyebrow">YOUR LEARNING JOURNEY</p>
+    <h2>Speaking Progress</h2>
+    <p>Review your practice sessions and learn from each conversation.</p>
+  </div>
+
+  <div class="dashboard-metrics">
+    <article class="dashboard-metric">
+      <span>Completed sessions</span>
+      <strong id="dashSessions">0</strong>
+    </article>
+    <article class="dashboard-metric">
+      <span>Average practice score</span>
+      <strong id="dashAverage">—</strong>
+    </article>
+    <article class="dashboard-metric">
+      <span>Messages practised</span>
+      <strong id="dashMessages">0</strong>
+    </article>
+    <article class="dashboard-metric">
+      <span>Grammar tips</span>
+      <strong id="dashCorrections">0</strong>
+    </article>
+  </div>
+
+  <div id="latestSessionReport" class="latest-session-report">
+    <h3>Your latest session</h3>
+    <p>Complete a conversation and click End conversation to generate your first report.</p>
+  </div>
+
+  <div class="dashboard-history">
+    <div class="dashboard-history-heading">
+      <h3>Practice history</h3>
+      <button id="clearProgress" type="button">Clear history</button>
+    </div>
+    <div id="dashboardHistory">
+      <p>Your completed sessions will appear here.</p>
+    </div>
+    <p class="dashboard-note">
+      Progress is saved in this browser on this device. Clearing browser
+      storage may remove it. Scores are AI-generated practice estimates.
+    </p>
+  </div>
+</section>
+
+<style>
+  .speaking-dashboard {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 25px;
+    border: 1px solid #dbe8e5;
+    border-radius: 22px;
+    background: #fff;
+    color: #173b37;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 12px 35px rgba(15, 118, 110, 0.06);
+  }
+
+  .dashboard-heading { margin-bottom: 22px; }
+
+  .dashboard-eyebrow {
+    color: #0f766e;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .dashboard-heading h2 {
+    margin: 8px 0;
+    font-size: clamp(24px, 4vw, 32px);
+  }
+
+  .dashboard-heading p,
+  .dashboard-note {
+    color: #657b77;
+    line-height: 1.6;
+  }
+
+  .dashboard-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin: 22px 0;
+  }
+
+  .dashboard-metric {
+    padding: 17px;
+    border: 1px solid #e0ece8;
+    border-radius: 14px;
+    background: #f5faf8;
+  }
+
+  .dashboard-metric span {
+    display: block;
+    color: #657b77;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .dashboard-metric strong {
+    display: block;
+    margin-top: 9px;
+    color: #0f766e;
+    font-size: 27px;
+  }
+
+  .latest-session-report,
+  .dashboard-history {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e0ece8;
+    border-radius: 15px;
+  }
+
+  .latest-session-report h3,
+  .dashboard-history h3 {
+    margin-top: 0;
+  }
+
+  .report-score {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 15px 0;
+  }
+
+  .report-score strong {
+    color: #0f766e;
+    font-size: 38px;
+  }
+
+  .report-score small { color: #657b77; }
+
+  .report-section {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #e0ece8;
+  }
+
+  .report-item {
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f5faf8;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .report-item p { margin: 5px 0; }
+
+  .dashboard-history-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .speaking-dashboard button {
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 9px;
+    background: #0f766e;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  #clearProgress { background: #edf3f1; color: #315a54; }
+
+  .history-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0ece8;
+  }
+
+  .history-row:last-child { border-bottom: 0; }
+
+  .history-row strong { display: block; }
+
+  .history-row small {
+    display: block;
+    margin-top: 5px;
+    color: #657b77;
+  }
+
+  .dashboard-note { font-size: 12px; }
+
+  @media (max-width: 700px) {
+    .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .speaking-dashboard { margin: 20px 10px; padding: 16px; }
+    .latest-session-report, .dashboard-history { padding: 14px; }
+  }
+
+  @media (max-width: 380px) {
+    .dashboard-metrics { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+(() => {
+  const STORAGE_KEY = "bhashatutorSpeakingProgressV1";
+
+  const $ = (id) => document.getElementById(id);
+
+  const reportBox = $("latestSessionReport");
+  const historyBox = $("dashboardHistory");
+
+  if (!reportBox || !historyBox) return;
+
+  function readSessions() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(data) ? data : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function makeElement(tag, text, className) {
+    const element = document.createElement(tag);
+    if (text !== undefined) element.textContent = text;
+    if (className) element.className = className;
+    return element;
+  }
+
+  function addSection(parent, title) {
+    const section = makeElement("div", undefined, "report-section");
+    section.appendChild(makeElement("h4", title));
+    parent.appendChild(section);
+    return section;
+  }
+
+  function renderReport(session) {
+    reportBox.replaceChildren();
+
+    reportBox.appendChild(makeElement("h3", "Your latest session"));
+    reportBox.appendChild(makeElement("p", session.topic));
+
+    const scoreRow = makeElement("div", undefined, "report-score");
+    scoreRow.appendChild(
+      makeElement("strong", `${session.score}/100`)
+    );
+    scoreRow.appendChild(
+      makeElement("small", "AI practice score · Not a pronunciation assessment")
+    );
+    reportBox.appendChild(scoreRow);
+
+    reportBox.appendChild(makeElement("p", session.summary));
+
+    const strengths = addSection(reportBox, "What you did well");
+    if (session.strengths.length) {
+      const list = document.createElement("ul");
+      session.strengths.forEach((item) => list.appendChild(makeElement("li", item)));
+      strengths.appendChild(list);
+    } else {
+      strengths.appendChild(makeElement("p", "Keep practising to identify strengths."));
+    }
+
+    const corrections = addSection(reportBox, "Grammar improvements");
+    if (session.grammarCorrections.length) {
+      session.grammarCorrections.forEach((item) => {
+        const card = makeElement("div", undefined, "report-item");
+        card.appendChild(makeElement("p", `You wrote: ${item.original}`));
+        card.appendChild(makeElement("p", `Better: ${item.corrected}`));
+        card.appendChild(makeElement("p", `Why: ${item.explanation}`));
+        corrections.appendChild(card);
+      });
+    } else {
+      corrections.appendChild(
+        makeElement("p", "No major corrections were identified in this session.")
+      );
+    }
+
+    const vocabulary = addSection(reportBox, "Useful vocabulary");
+    if (session.vocabulary.length) {
+      session.vocabulary.forEach((item) => {
+        const card = makeElement("div", undefined, "report-item");
+        card.appendChild(makeElement("strong", item.word));
+        card.appendChild(makeElement("p", item.meaning));
+        card.appendChild(makeElement("p", `Example: ${item.example}`));
+        vocabulary.appendChild(card);
+      });
+    } else {
+      vocabulary.appendChild(makeElement("p", "Continue practising to build vocabulary."));
+    }
+
+    const suggestions = addSection(reportBox, "What to practise next");
+    if (session.suggestions.length) {
+      const list = document.createElement("ul");
+      session.suggestions.forEach((item) => list.appendChild(makeElement("li", item)));
+      suggestions.appendChild(list);
+    }
+  }
+
+  function renderDashboard() {
+    const sessions = readSessions();
+
+    $("dashSessions").textContent = sessions.length;
+
+    const average = sessions.length
+      ? Math.round(sessions.reduce((sum, item) => sum + item.score, 0) / sessions.length)
+      : null;
+
+    $("dashAverage").textContent = average === null ? "—" : `${average}/100`;
+
+    $("dashMessages").textContent = sessions.reduce(
+      (sum, item) => sum + item.messageCount, 0
+    );
+
+    $("dashCorrections").textContent = sessions.reduce(
+      (sum, item) => sum + item.grammarCorrections.length, 0
+    );
+
+    historyBox.replaceChildren();
+
+    if (!sessions.length) {
+      historyBox.appendChild(
+        makeElement("p", "Your completed sessions will appear here.")
+      );
+      return;
+    }
+
+    sessions.forEach((session) => {
+      const row = makeElement("div", undefined, "history-row");
+      const details = document.createElement("div");
+
+      details.appendChild(makeElement("strong", session.topic));
+      details.appendChild(
+        makeElement("small", new Date(session.date).toLocaleString())
+      );
+
+      const score = makeElement("strong", `${session.score}/100`);
+      row.append(details, score);
+      historyBox.appendChild(row);
+    });
+  }
+
+  async function generateReport(detail) {
+    const learnerMessages = detail.history.filter(
+      (message) => message.role === "user"
+    );
+
+    if (!learnerMessages.length) {
+      reportBox.replaceChildren(
+        makeElement("h3", "No report yet"),
+        makeElement("p", "Send at least one reply before ending your session.")
+      );
+      return;
+    }
+
+    reportBox.replaceChildren(
+      makeElement("h3", "Preparing your speaking report..."),
+      makeElement("p", "Your AI coach is reviewing your conversation.")
+    );
+
+    reportBox.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    try {
+      const response = await fetch("/api/session-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          topic: detail.topic,
+          history: detail.history
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.success || !data.report) {
+        throw new Error(data.error || "Could not generate the report.");
+      }
+
+      const report = data.report;
+
+      const session = {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        date: new Date().toISOString(),
+        topic: detail.topic,
+        score: report.score,
+        summary: report.summary,
+        strengths: report.strengths,
+        grammarCorrections: report.grammarCorrections,
+        vocabulary: report.vocabulary,
+        suggestions: report.suggestions,
+        messageCount: learnerMessages.length
+      };
+
+      // Save completed reports locally in this browser.
+      const sessions = readSessions();
+      sessions.unshift(session);
+
+      // Keep the most recent 50 reports.
+      try {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(sessions.slice(0, 50))
+        );
+      } catch {
+        throw new Error("The report was created, but browser storage is unavailable.");
+      }
+
+      renderReport(session);
+      renderDashboard();
+    } catch (error) {
+      reportBox.replaceChildren(
+        makeElement("h3", "Report unavailable"),
+        makeElement("p", error.message || "Please try again.")
+      );
+
+      const retry = makeElement("button", "Try again");
+      retry.type = "button";
+      retry.addEventListener("click", () => generateReport(detail));
+      reportBox.appendChild(retry);
+    }
+  }
+
+  window.addEventListener("bhashatutor:session-ended", (event) => {
+    if (!event.detail) return;
+    generateReport(event.detail);
+  });
+
+  $("clearProgress").addEventListener("click", () => {
+    if (!window.confirm("Clear all saved BhashaTutor progress from this browser?")) {
+      return;
+    }
+
+    localStorage.removeItem(STORAGE_KEY);
+    reportBox.replaceChildren(
+      makeElement("h3", "Your latest session"),
+      makeElement("p", "Complete a conversation to generate a new report.")
+    );
+    renderDashboard();
+  });
+
+  renderDashboard();
+})();
+
+</script>
+
+</body>
+</html>
